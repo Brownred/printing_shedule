@@ -16,7 +16,7 @@ export async function GET(request: Request) {
   try {
     const url = new URL(request.url);
     const queryParams = Object.fromEntries(url.searchParams);
-   
+
     const query = querySchema.safeParse(queryParams);
     if (!query.success) {
       return NextResponse.json(
@@ -44,7 +44,6 @@ export async function GET(request: Request) {
     try {
       // Test database connection first
       await prisma.$queryRaw`SELECT 1`;
-
       const [total, orders] = await Promise.all([
         prisma.printOrder.count({ where }),
         prisma.printOrder.findMany({
@@ -77,7 +76,6 @@ export async function GET(request: Request) {
           hasMore: skip + orders.length < total,
         }
       });
-
     } catch (dbError) {
       if (dbError instanceof Prisma.PrismaClientInitializationError) {
         console.error('Database connection error:', dbError.message);
@@ -86,7 +84,7 @@ export async function GET(request: Request) {
           { status: 503 }
         );
       }
-      
+
       if (dbError instanceof Prisma.PrismaClientKnownRequestError) {
         console.error('Prisma known error:', dbError.code, dbError.message);
         return NextResponse.json(
@@ -97,7 +95,6 @@ export async function GET(request: Request) {
 
       throw dbError; // Re-throw unexpected errors
     }
-
   } catch (error) {
     console.error('Unexpected error in orders API:', error);
     return NextResponse.json(
