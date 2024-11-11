@@ -124,7 +124,7 @@ const InstallPrompt = () => {
                 <Download className="mr-2 h-4 w-4" />
                 {installationStatus === 'success' ? '📃 Successfully Installed!' :
                  installationStatus === 'error' ? 'Try Again' :
-                 'Install Nailedit App'}
+                 'Install STC Printing App'}
               </Button>
             </div>
           )}

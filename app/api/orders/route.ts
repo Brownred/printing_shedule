@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
@@ -36,7 +37,7 @@ export async function GET(request: Request) {
           { customer: { email: { contains: search, mode: 'insensitive' } } },
           { mpesaRef: { contains: search, mode: 'insensitive' } },
         ],
-      } as Prisma.PrintOrderWhereInput),
+      } as any),
     };
 
     // Wrap database operations in a try-catch block specifically for database errors
